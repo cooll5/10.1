@@ -1,0 +1,100 @@
+#include <iostream>
+#include <ctime>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+void createtext(string filename)
+{
+    if ((filename.size() <=4) && filename.substr(filename.size() - 4,filename.size()-1) != ".txt")
+        {
+            cout << "Error! You must enter the valid filename with \".txt\" in the end of the name!" << endl;
+            return;
+        }
+
+    char ch;
+    string s;
+    ofstream fout;
+    fout.open(filename);
+    cin.sync();
+    do
+    {
+        cin.ignore();
+        cin.sync();
+        cout << "enter line: ";
+        cin.sync();
+        getline(cin, s);
+        fout << s << endl;
+        cout << "continue? (y/n): ";
+        cin >> ch;
+    } while (ch == 'y' || ch == 'Y');
+    cout << endl;
+    fout.close();
+}
+void printttext(string filename)
+{
+    ifstream fin;
+    fin.open(filename);
+    string str;
+    while (getline(fin, str))
+    {
+        cout << str << endl;
+    }
+    cout << endl << "Reading ended." << endl;
+}
+void task(string filename)
+{
+    ifstream fin;
+    fin.open(filename);
+    string str;
+    int j = 0, k = 0;
+    while (getline(fin, str))
+    {
+        cout << str << endl;
+        if ((j = str.find("abc")) != -1)
+        {
+            k++;
+        }
+
+
+    }
+    if (k !=0)
+        cout << "the count of the abcs : " <<k << endl;
+    else
+        cout << "There is no abcs in the file" << endl;
+    fin.close();
+}
+int main()
+{
+    srand(time(NULL));
+    string filename;
+    cout << "Enter filename: ";
+    cin.sync();
+    getline(cin, filename);
+    cout << "Menu\n1.Enter some text\n2.print text\n3.task" << endl;
+    int ch; cin >> ch;
+    switch (ch)
+    {
+        case 1:
+        {
+            createtext(filename);
+            break;
+        }
+        case 2:
+        {
+            printttext(filename);
+            break;
+        }
+        case 3:
+        {
+            //printttext(filename);
+            task(filename);
+            break;
+        }
+        default:
+            break;
+    }
+    system("pause");
+    return 0;
+}
